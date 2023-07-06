@@ -1,4 +1,4 @@
-const router = require('koa-router')({prefix: '/employee'})
+const router = require('koa-router')()
 
 const employeeService = require('../services/employee');
 const Result = require('../models/Result')

@@ -1,6 +1,6 @@
 
 const Result = require('../models/Result')
-const router = require('koa-router')({prefix: '/user'})
+const router = require('koa-router')()
 
 const {
     md5,

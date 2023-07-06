@@ -12,7 +12,6 @@ const users = require('./routes/users')
 
 const jwtAuth = require('./routes/jwt')
 const swagger = require('./routes/swagger')
-const { koaSwagger } = require('koa2-swagger-ui');
 
 const cors = require('@koa/cors')
 // error handler
@@ -29,7 +28,15 @@ app.use(require('koa-static')(__dirname + '/public'))
 app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
-
+const { koaSwagger } = require('koa2-swagger-ui');
+app.use(
+  koaSwagger({
+    routePrefix: '/swagger/index.html', // 这里配置swagger的访问路径
+    swaggerOptions: {
+      url: '/swagger/swagger.json', // 这里配置swagger的文档配置URL，也就是说，我们展示的API都是通过这个接口生成的。
+    },
+  }),
+);
 
 // logger
 app.use(async (ctx, next) => {
@@ -43,14 +50,7 @@ app.use(cors())
 app.use(jwtAuth)
 // routes
 app.use(swagger.routes(), swagger.allowedMethods())
-app.use(
-  koaSwagger({
-    routePrefix: '/swagger/index.html', // 这里配置swagger的访问路径
-    swaggerOptions: {
-      url: '/swagger/swagger.json', // 这里配置swagger的文档配置URL，也就是说，我们展示的API都是通过这个接口生成的。
-    },
-  }),
-);
+
 app.use(index.routes(), index.allowedMethods())
 app.use(employee.routes(), employee.allowedMethods())
 app.use(users.routes(), users.allowedMethods())

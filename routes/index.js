@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 
 router.get('/', async (ctx, next) => {
-  // 不同于express的地方
+  // 不同于express
   await ctx.render('index', {
     title: 'Hello Koa 2!'
   })
