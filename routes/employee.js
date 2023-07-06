@@ -1,5 +1,4 @@
-const router = require('koa-router')()
-
+const router = require('koa-router')({prefix: '/employee'})
 const employeeService = require('../services/employee');
 const Result = require('../models/Result')
 const seq = require('sequelize');

@@ -1,6 +1,6 @@
 
 const Result = require('../models/Result')
-const router = require('koa-router')()
+const router = require('koa-router')({prefix: '/user'})
 
 const {
     md5,
@@ -15,10 +15,6 @@ const userService = require('../services/users')
 
 // const boom = require('boom')
 const jwt = require('jsonwebtoken')
-// const RBAC = require('./rbac')
-var myCache = require('../utils/cache.js').myCache
-var SMS_TYPE_LOGIN = require('../utils/cache.js').SMS_TYPE_LOGIN;
-var SMS_TYPE_BINDPHONE = require('../utils/cache.js').SMS_TYPE_BINDPHONE;
 
 /**
  * @swagger
