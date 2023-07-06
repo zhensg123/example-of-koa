@@ -1,4 +1,4 @@
-const router = require('koa-router')()
+const router = require('koa-router')({prefix: '/employee'})
 
 const employeeService = require('../services/employee');
 const Result = require('../models/Result')
@@ -22,9 +22,8 @@ const Op = seq.Op;
  *        200:
  *          description: 查询结果
  */
-router.get('/findAll', async function(req, res, next) {
-   const {pageSize = 10, pageIndex = 1, keyword=''} = req.query
-   console.log(req.query, 'req')
+router.get('/findAll', async function(ctx) {
+   const {pageSize = 10, pageIndex = 1, keyword=''} = ctx.req.query
 
    const employee = await employeeService.findData({
       ename: {
@@ -36,34 +35,33 @@ router.get('/findAll', async function(req, res, next) {
    })
    console.log(employee, 'employee')
    if (employee) {
-      new Result(employee, '获取成功', 'success').success(res)
+      new Result(employee, '获取成功', 'success').success(ctx)
    } else {
-      new Result(null, '获取失败', 'fail').fail(res)
+      new Result(null, '获取失败', 'fail').fail(ctx)
    }
 });
 
-router.post('/add', async function(req, res, next) {
-   console.log(req.body, 'req.body2')
-   const employee = await employeeService.add(req.body)
-   new Result(employee, '新增成功', 'success').success(res)
+router.post('/add', async function(ctx) {
+   const employee = await employeeService.add(ctx.req.body)
+   new Result(employee, '新增成功', 'success').success(ctx)
 
 });
 
-router.post('/update', async function(req, res, next) {
-   const {eno, ename, salary, dname, hiredate  } = req.body
+router.post('/update', async function(ctx) {
+   const {eno, ename, salary, dname, hiredate  } = ctx.req.body
    const employee = await employeeService.update(eno, {
       ename,
      salary,
      dname,
      hiredate
    })
-   new Result(null, '更新成功', 'success').success(res)
+   new Result(null, '更新成功', 'success').success(ctx)
 });
 
-router.delete('/del', async function(req, res, next) {
-   const id = req.query.id;
+router.delete('/del', async function(ctx) {
+   const id = ctx.req.query.id;
    await employeeService.delete(id)
-   new Result(null, '删除成功', 'success').success(res)
+   new Result(null, '删除成功', 'success').success(ctx)
 });
 
 module.exports = router;

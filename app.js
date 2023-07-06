@@ -7,8 +7,11 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
 const index = require('./routes/index')
+const employee = require('./routes/employee')
 const users = require('./routes/users')
 
+const jwtAuth = require('./routes/jwt')
+const cors = require('@koa/cors')
 // error handler
 onerror(app)
 
@@ -31,9 +34,12 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+app.use(cors())
 
+app.use(jwtAuth)
 // routes
 app.use(index.routes(), index.allowedMethods())
+app.use(employee.routes(), employee.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 
 // error-handling

@@ -45,12 +45,12 @@ class Result {
         if (this.options) {
             base = { ...base, ...this.options }
         }
-        console.log(base)
         return base
     }
 
     json(res) {
-        res.json(this.createResult())
+        // res.json(this.createResult())
+        res.body = this.createResult()
     }
 
     success(res) {

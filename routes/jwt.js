@@ -13,7 +13,9 @@ const jwtAuth = koaJwt({
         // '/user/register',
         // /^\/userTemplateInst\/shareinfo\/.*/,
         //'/upload/access',
-        '/api-docs'
+        '/api-docs',
+        "/string",
+        "/json"
         // '/user/all',
         // /^\/user\/delete\/.*/,
         // /^\/user\/update\/.*/,

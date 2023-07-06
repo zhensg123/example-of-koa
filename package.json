@@ -9,17 +9,29 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "boom": "^7.3.0",
     "debug": "^4.1.1",
+    "http-errors": "~1.6.3",
+    "jsonwebtoken": "^9.0.0",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
     "koa-json": "^2.0.2",
+    "koa-jwt": "^4.0.4",
     "koa-logger": "^3.2.0",
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
-    "pug": "^2.0.3"
+    "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.4.3",
+    "node-cache": "^5.1.2",
+    "pug": "^2.0.3",
+    "sequelize": "^6.32.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

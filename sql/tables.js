@@ -18,7 +18,7 @@ const employee = sequelize.define('employee', {
         }
     },
     salary: DataTypes.INTEGER,
-    dname: DataTypes.INTEGER,
+    dname: DataTypes.STRING,
     hiredate: DataTypes.DATE    // 可以用字符串进行更新   
 }, {
     paranoid: true,  // paranoid表就是软删除而非硬删除机制的表
@@ -40,7 +40,8 @@ const students = sequelize.define('students', {
     },
     name: DataTypes.STRING
 }, {
-    tableName: 'students'
+    tableName: 'students',
+    timestamps: false
 });
 
 
