@@ -23,7 +23,7 @@ const Op = seq.Op;
  *          description: 查询结果
  */
 router.get('/findAll', async function(ctx) {
-   const {pageSize = 10, pageIndex = 1, keyword=''} = ctx.req.query
+   const {pageSize = 10, pageIndex = 1, keyword=''} = ctx.request.query
 
    const employee = await employeeService.findData({
       ename: {
@@ -33,7 +33,6 @@ router.get('/findAll', async function(ctx) {
       size: parseInt(pageSize),
       page: parseInt(pageIndex)
    })
-   console.log(employee, 'employee')
    if (employee) {
       new Result(employee, '获取成功', 'success').success(ctx)
    } else {
@@ -42,13 +41,13 @@ router.get('/findAll', async function(ctx) {
 });
 
 router.post('/add', async function(ctx) {
-   const employee = await employeeService.add(ctx.req.body)
+   const employee = await employeeService.add(ctx.request.body)
    new Result(employee, '新增成功', 'success').success(ctx)
 
 });
 
 router.post('/update', async function(ctx) {
-   const {eno, ename, salary, dname, hiredate  } = ctx.req.body
+   const {eno, ename, salary, dname, hiredate  } = ctx.request.body
    const employee = await employeeService.update(eno, {
       ename,
      salary,
@@ -59,7 +58,7 @@ router.post('/update', async function(ctx) {
 });
 
 router.delete('/del', async function(ctx) {
-   const id = ctx.req.query.id;
+   const id = ctx.request.query.id;
    await employeeService.delete(id)
    new Result(null, '删除成功', 'success').success(ctx)
 });

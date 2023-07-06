@@ -15,13 +15,16 @@ const jwtAuth = koaJwt({
         //'/upload/access',
         '/api-docs',
         "/string",
-        "/json"
+        "/json",
+        "/swagger/index.html",
+        '/swagger/swagger.json',
+        '/favicon.png'
         // '/user/all',
         // /^\/user\/delete\/.*/,
         // /^\/user\/update\/.*/,
         // /^\/user\/add\/.*/,
 
-        // //student
+        // //student/index
         // /^\/student\/findStudent\/.*/,
         // /^\/student\/findStudent_User\/.*/,
         // /^\/student\/addStudent\/.*/,

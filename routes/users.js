@@ -1,6 +1,6 @@
 
 const Result = require('../models/Result')
-const router = require('koa-router')()
+const router = require('koa-router')({prefix: '/user'})
 
 const {
     md5,
@@ -39,10 +39,9 @@ var SMS_TYPE_BINDPHONE = require('../utils/cache.js').SMS_TYPE_BINDPHONE;
  *        200:
  *          description: 返回token
  */
-router.post('/user/login', async function (ctx) {
-    console.log(ctx.request.body, 'bnodty')
+router.post('/login', async function (ctx) {
         const username = ctx.request.body.username
-        const password = md5(`${ctx.request.password}${PWD_SALT}`)
+        const password = md5(`${ctx.request.body.password}${PWD_SALT}`)
         const user = await userService.login(username, password)
         if (!user) {
             new Result(null, '登录失败', 'login failed').fail(ctx)
@@ -67,8 +66,8 @@ router.post('/user/login', async function (ctx) {
     router.post('/register', async function (ctx) {
     
         const obj = {
-            username: ctx.req.body.username,
-            password: md5(`${ctx.req.body.password}${PWD_SALT}`)
+            username: ctx.request.body.username,
+            password: md5(`${ctx.request.body.password}${PWD_SALT}`)
         }
         const user = await userService.addUser(obj)
         const session = {
