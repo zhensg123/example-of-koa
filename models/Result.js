@@ -50,6 +50,7 @@ class Result {
 
     json(res) {
         // res.json(this.createResult())
+        // 返回值使用body = 
         res.body = this.createResult()
     }
 

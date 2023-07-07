@@ -1,4 +1,4 @@
-const router = require('koa-router')({prefix: '/employee'})
+const router = require('koa-router')({prefix: '/employee'})   // 路由和expres是不一致的
 const employeeService = require('../services/employee');
 const Result = require('../models/Result')
 const seq = require('sequelize');
