@@ -1,7 +1,7 @@
 const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
-const json = require('koa-json')
+const json = require('koa-json')  // 返回给前端的json对象
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
@@ -15,12 +15,34 @@ const swagger = require('./routes/swagger')
 
 const cors = require('@koa/cors')
 // error handler
-onerror(app)
+// 对错误进行统一处理  可以自定义对app进行统一处理
+onerror(app, {
+  json: function (err, ctx) {
+    if (err.name === 'UnauthorizedError') {
+      ctx.status = 200;
 
-// middlewares
+      ctx.body = {
+        code: -2,
+        msg: 'token失效',
+        error: err.status,
+        errorMsg: err.name
+      }
+      return
+    }
+      ctx.status = 500;
+      ctx.body = { message: err.message };
+  },
+  html: function (err, ctx) {
+      ctx.status = 500;
+      ctx.body = '<p>Something wrong, please contact administrator.</p>';
+  }
+})
+
+// middlewares  处理post json 数据
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
 }))
+
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
@@ -55,9 +77,18 @@ app.use(index.routes(), index.allowedMethods())
 app.use(employee.routes(), employee.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 
-// error-handling
-app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
+// error-handling 暂时还不知道怎么用
+app.on('error', async (err, ctx) => {
+ 
 });
 
+// 看进程错误处理
+process.on('uncaughtException', function(err) {
+  console.log('uncaughtException', err)
+})
+
+const unhandledRejections = new Map();
+process.on('unhandledRejection', (reason, promise) => {
+  unhandledRejections.set(promise, reason);
+})
 module.exports = app
